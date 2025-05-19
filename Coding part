@@ -1,0 +1,74 @@
+Import pandas as pd
+
+From sklearn.model_selection import train_test_split
+
+From sklearn.ensemble import RandomForestClassifier
+
+
+
+Data = {
+
+    ‘PM2.5’: [12, 35, 55, 110, 180, 250, 20, 70, 90, 300],
+
+    ‘PM10’: [20, 60, 100, 160, 220, 400, 30, 120, 160, 500],
+
+    ‘NO2’: [15, 40, 65, 100, 130, 180, 22, 88, 99, 190],
+
+    ‘CO’: [0.3, 0.7, 1.2, 2.5, 3.5, 5.0, 0.4, 1.8, 2.2, 6.0],
+
+    ‘O3’: [30, 50, 80, 120, 160, 200, 40, 100, 140, 220],
+
+    ‘SO2’: [5, 15, 25, 40, 60, 100, 10, 30, 50, 120],
+
+    ‘AQI_Level’: [
+
+        ‘Good’, ‘Moderate’, ‘Moderate’, ‘Unhealthy’, ‘Very Unhealthy’, ‘Hazardous’,
+
+        ‘Good’, ‘Unhealthy’, ‘Very Unhealthy’, ‘Hazardous’
+
+    ]
+
+}
+
+
+
+Df = pd.DataFrame(data)
+
+X = df.drop(‘AQI_Level’, axis=1)
+
+Y = df[‘AQI_Level’]
+
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+Model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+Model.fit(X_train, y_train)
+
+
+
+Print(“\nEnter pollutant values to predict Air Quality Index (AQI Level):”)
+
+Pm25 = float(input(“PM2.5 (µg/m3): “))
+
+Pm10 = float(input(“PM10 (µg/m3): “))
+
+No2 = float(input(“NO2 (ppb): “))
+
+Co = float(input(“CO (mg/m3): “))
+
+O3 = float(input(“O3 (ppb): “))
+
+So2 = float(input(“SO2 (ppb): “))
+
+
+
+Input_data = pd.DataFrame([[pm25, pm10, no2, co, o3, so2]], columns=X.columns)
+
+Prediction = model.predict(input_data)
+
+
+
+Print(“\nPredicted Air Quality Level:”, prediction[0])
+
